@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="tabTitleDisplay">HOSTING. ANYTIME.</title>
+    <style>
+        :root {
+            --bg-color: #0b061f;
+            --card-bg: rgba(20, 11, 43, 0.85);
+            --card-border: rgba(189, 0, 255, 0.2);
+            --border-glow: rgba(189, 0, 255, 0.4);
+            
+            /* Typography Accents */
+            --title-color: #ffffff;
+            --tagline-color: #b4b1cc;
+            --box-title-color: #ffffff;
+            --box-sub-color: #8c87ab;
+            --key-text-color: #ff007f;
+            --key-box-bg: #070314;
+            --key-box-border: rgba(255, 0, 127, 0.25);
+            
+            /* Dynamic Buttons State Controls */
+            --gen-btn-bg: linear-gradient(135deg, #7928ca, #ff0080);
+            --gen-btn-text: #ffffff;
+            --copy-btn-bg: rgba(255, 255, 255, 0.05);
+            --copy-btn-text: #ffffff;
+            --tg-btn-bg: rgba(0, 136, 204, 0.07);
+            --tg-btn-text: #ffffff;
+            --wa-btn-bg: rgba(37, 211, 102, 0.07);
+            --wa-btn-text: #ffffff;
+            --admin-nav-btn-bg: rgba(255, 255, 255, 0.03);
+            --admin-nav-btn-text: #8c87ab;
+        }
+
+        /*--- HIGH PERFORMANCE ANIMATIONS (NO LAG) ---*/
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes floatingGlow {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(3%, 4%) scale(1.08); }
+        }
+
+        @keyframes neonPulse {
+            0%, 100% { filter: drop-shadow(0 2px 5px rgba(255,0,128,0.4)); text-shadow: 0 0 8px rgba(189,0,255,0.5); }
+            50% { filter: drop-shadow(0 2px 15px rgba(255,0,128,0.6)); text-shadow: 0 0 18px rgba(189,0,255,0.9); }
+        }
+
+        @keyframes keyReveal {
+            0% { transform: scale(0.95); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes rotateSpinner {
+            to { transform: rotate(360deg); }
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            position: relative;
+            overflow-x: hidden;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        /* High performance background graphic layer */
+        body::before {
+            content: "";
+            position: absolute;
+            top: -10%; left: -10%; width: 120%; height: 120%;
+            background: radial-gradient(circle at 15% 25%, rgba(121, 40, 202, 0.3), transparent 45%),
+                        radial-gradient(circle at 85% 75%, rgba(255, 0, 128, 0.2), transparent 50%);
+            z-index: -1;
+            will-change: transform;
+            animation: floatingGlow 14s infinite ease-in-out;
+        }
+
+        .top-bar { width: 100%; max-width: 500px; display: flex; justify-content: flex-end; margin-bottom: 25px; z-index: 5; }
+        
+        .btn-admin-nav {
+            background: var(--admin-nav-btn-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--admin-nav-btn-text);
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+        .btn-admin-nav:hover { background: rgba(189, 0, 255, 0.2); color: #ffffff; transform: rotate(90deg); border-color: #bd00ff; box-shadow: 0 0 15px rgba(189, 0, 255, 0.4); }
+
+        .main-wrapper { width: 100%; max-width: 500px; display: flex; flex-direction: column; align-items: center; z-index: 2; }
+        
+        /* Optimized Cyber Title */
+        h2.main-title { 
+            font-size: 42px; 
+            margin: 10px 0; 
+            font-weight: 900; 
+            text-align: center; 
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #ffffff, #ff0080);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: neonPulse 4s infinite ease-in-out;
+        }
+        
+        .tagline { color: var(--tagline-color); font-size: 14px; margin: 0 0 30px 0; text-align: center; line-height: 1.6; padding: 0 15px; }
+
+        .container {
+            width: 100%;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 40px 25px;
+            border-radius: 30px;
+            box-sizing: border-box;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 25px 55px rgba(0, 0, 0, 0.65), 0 0 40px rgba(189, 0, 255, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .section-label { font-weight: 800; font-size: 24px; color: var(--box-title-color); margin-bottom: 8px; text-align: center; letter-spacing: 1px; }
+        .section-sub { color: var(--box-sub-color); font-size: 13px; margin-bottom: 28px; text-align: center; }
+        .badge-row { display: flex; justify-content: center; gap: 8px; margin-bottom: 30px; }
+        
+        .info-badge {
+            background: rgba(255, 0, 128, 0.05);
+            border: 1px solid rgba(255, 0, 128, 0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #ff0080;
+            box-shadow: 0 0 10px rgba(255, 0, 128, 0.05);
+        }
+
+        .output-wrapper { display: flex; gap: 12px; margin: 20px 0; align-items: center; width: 100%; position: relative;}
+        .output-box {
+            flex: 1;
+            background: var(--key-box-bg);
+            padding: 24px 16px;
+            border-radius: 18px;
+            font-family: monospace;
+            font-size: 24px;
+            font-weight: 800;
+            border: 1px solid var(--key-box-border);
+            color: var(--key-text-color);
+            text-align: center;
+            box-shadow: inset 0 3px 15px rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .output-box.activated {
+            animation: keyReveal 0.3s ease-out forwards;
+            border-color: #ff007f;
+            text-shadow: 0 0 12px rgba(255, 0, 127, 0.7);
+            box-shadow: inset 0 3px 15px rgba(0,0,0,0.8), 0 0 15px rgba(255, 0, 127, 0.15);
+        }
+
+        /* AE Loader Custom Setup */
+        .circular-loader-wrap {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .circle-outer {
+            width: 40px;
+            height: 40px;
+            border: 3.5px solid rgba(255, 0, 127, 0.1);
+            border-top-color: #ff007f;
+            border-radius: 50%;
+            animation: rotateSpinner 0.7s linear infinite;
+        }
+        .load-percentage {
+            font-size: 13px;
+            color: #ff007f;
+            font-weight: 800;
+        }
+
+        .btn-copy-action {
+            background: var(--copy-btn-bg);
+            color: var(--copy-btn-text);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 26px 20px;
+            font-size: 12px;
+            font-weight: 800;
+            border-radius: 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: none; 
+        }
+        .btn-copy-action:hover { background: #ffffff; color: #000000; transform: scale(1.03); }
+
+        .timer-status-strip {
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin: -6px 0 26px 0;
+            padding: 0 4px;
+            box-sizing: border-box;
+        }
+        .ts-generated { color: #10b981; font-size: 11px; font-weight: 800; text-transform: uppercase; }
+        .ts-expired { color: #f59e0b; font-size: 11px; font-weight: 800; text-align: right; text-transform: uppercase; }
+
+        .btn {
+            background: var(--gen-btn-bg);
+            color: var(--gen-btn-text);
+            border: none;
+            padding: 19px;
+            font-size: 15px;
+            border-radius: 18px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+            box-shadow: 0 6px 20px rgba(255, 0, 128, 0.3);
+        }
+        .btn:hover { transform: translateY(-1.5px); box-shadow: 0 8px 25px rgba(255, 0, 128, 0.45); filter: brightness(1.1); }
+
+        .social-group { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; }
+        .btn-social {
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 18px 14px; 
+            border-radius: 18px;
+            font-size: 13px; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.2s;
+            box-sizing: border-box;
+        }
+        .btn-tg-style { background: var(--tg-btn-bg); color: var(--tg-btn-text); border-color: rgba(0, 136, 204, 0.15); }
+        .btn-wa-style { background: var(--wa-btn-bg); color: var(--wa-btn-text); border-color: rgba(37, 211, 102, 0.15); }
+        .btn-social:hover { transform: translateY(-2px); background: rgba(255, 255, 255, 0.04); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        
+        .social-icon-wrapper { display: flex; align-items: center; justify-content: center; width: 18px; height: 18px; }
+        .tg-vector-icon { width: 100%; height: 100%; fill: #0088cc; }
+        .wa-vector-icon { width: 100%; height: 100%; fill: #25d366; }
+
+        /*--- ADMIN CONSOLE AREA ---*/
+        .auth-container {
+            width: 100%; max-width: 420px; background: var(--card-bg); border: 1px solid var(--card-border);
+            border-radius: 26px; padding: 35px 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.7);
+            text-align: center; margin-top: 20px; display: none; backdrop-filter: blur(20px);
+        }
+        .admin-container {
+            margin-top: 20px; display: none; width: 100%; max-width: 500px; text-align: left;
+        }
+        .admin-tab-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; background: rgba(0, 0, 0, 0.5); padding: 6px; border-radius: 14px; margin-bottom: 20px; }
+        .admin-tab { background: transparent; border: none; color: #8c87ab; padding: 12px 4px; font-size: 10px; font-weight: 800; border-radius: 10px; cursor: pointer; text-transform: uppercase; }
+        .admin-tab.active { background: #7928ca; color: #ffffff; }
+        .panel-content { display: none; }
+        .panel-content.active { display: block; }
+
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .stat-card { background: rgba(0, 0, 0, 0.35); border: 1px solid rgba(255,255,255,0.03); padding: 18px; border-radius: 16px; }
+        .stat-card .label { font-size: 11px; color: #8c87ab; font-weight: 800; text-transform: uppercase; }
+        .stat-card .value { font-size: 24px; font-weight: 800; margin-top: 4px; color: #ff0080; }
+
+        .setting-section { background: rgba(0, 0, 0, 0.3); padding: 18px; border-radius: 16px; margin-bottom: 15px; border: 1px solid rgba(255, 255, 255, 0.03); }
+        .setting-section h4 { margin: 0 0 12px 0; color: #ff0080; font-size: 12px; text-transform: uppercase; }
+        label { display: block; margin-bottom: 6px; font-size: 10px; color: #b4b1cc; font-weight: 800; text-transform: uppercase; }
+        
+        input[type="text"], input[type="password"] {
+            width: 100%; padding: 13px; margin-bottom: 12px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.06); background: rgba(0, 0, 0, 0.5); color: #ffffff; box-sizing: border-box; font-size: 13px;
+        }
+        
+        .color-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 10px; }
+        .color-row input[type="color"] { border: none; width: 35px; height: 24px; border-radius: 6px; background: transparent; cursor: pointer; }
+
+        .footer-copyright {
+            margin-top: 50px;
+            font-size: 11px;
+            color: rgba(255, 0, 128, 0.25);
+            font-weight: 800;
+            letter-spacing: 2.2px;
+            text-transform: uppercase;
+            text-align: center;
+            user-select: none;
+            text-shadow: 0 0 8px rgba(255, 0, 128, 0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <button class="btn-admin-nav" id="adminNavBtn" onclick="toggleAdminFlow()">⚙️</button>
+    </div>
+
+    <div class="main-wrapper" id="mainDashboardView">
+        <h2 class="main-title" id="text-siteTitle">BALA X MOD</h2>
+        <p class="tagline" id="text-siteTagline">I am hosting anything, anytime — get your API key instantly.</p>
+        
+        <div class="container" id="mainGeneratorCard">
+            <div class="section-label" id="text-boxHeader">GENERATE YOUR KEY</div>
+            <div class="section-sub" id="text-boxSubHeader">One click • Valid 24 hours • Free</div>
+
+            <div class="badge-row">
+                <div class="info-badge">⚡ INSTANT</div>
+                <div class="info-badge">🔒 SECURE</div>
+                <div class="info-badge">🕒 24H VALID</div>
+            </div>
+
+            <div class="output-wrapper">
+                <div class="output-box" id="keyOutput">
+                    <span id="keyDefaultTxt">XXXX-XXXX-XXXX-XXXX</span>
+                    <div class="circular-loader-wrap" id="aeLoader">
+                        <div class="circle-outer"></div>
+                        <div class="load-percentage" id="loadPercent">0%</div>
+                    </div>
+                </div>
+                <button class="btn-copy-action" id="copyBtnElement" onclick="copyGeneratedKey()">COPY</button>
+            </div>
+
+            <div class="timer-status-strip" id="timerStatusStrip">
+                <div class="ts-generated" id="text-statusGenerated">YOUR KEY GENERATED✅</div>
+                <div class="ts-expired" id="countdownTimerText">YOUR KEY WAS EXPIRED⌛ (24:00:00)</div>
+            </div>
+
+            <button class="btn" id="generateBtn" onclick="processKeyGeneration()">GENERATE KEY</button>
+        </div>
+
+        <div class="social-group">
+            <a href="https://t.me/yourchannel" id="tgLink" target="_blank" class="btn-social btn-tg-style">
+                <div class="social-icon-wrapper"><svg class="tg-vector-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-1-.65-.35-1 .22-1.62.15-.15 2.7-2.46 2.75-2.67.01-.03.01-.14-.06-.2-.07-.06-.17-.04-.25-.02-.11.02-1.83 1.16-5.16 3.42-.49.34-.93.5-1.33.49-.44-.01-1.29-.25-1.92-.45-.77-.25-1.39-.39-1.34-.83.03-.23.35-.46.97-.71 3.79-1.65 6.32-2.74 7.59-3.27 3.61-1.5 4.36-1.76 4.85-1.77.11 0 .35.03.51.16.13.11.17.27.19.39.02.14.02.43 0 .54z"/></svg></div>
+                <span id="text-tgBtnLabel">JOIN TELEGRAM</span>
+            </a>
+            <a href="https://wa.me/yournumber" id="waLink" target="_blank" class="btn-social btn-wa-style">
+                <div class="social-icon-wrapper"><svg class="wa-vector-icon" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm5.82 14.02c-.26.74-1.28 1.35-1.77 1.41-.49.06-.98.09-3.14-.77-2.77-1.11-4.52-3.93-4.66-4.12-.14-.19-1.12-1.49-1.12-2.84 0-1.35.7-2.01.95-2.28.25-.26.54-.33.72-.33.18 0 .36.01.52.02.17.01.4.01.62.53.23.56.79 1.93.86 2.07.07.14.12.3.02.48-.1.19-.15.3-.3.48-.15.18-.32.4-.45.54-.15.15-.3.31-.13.6.17.29.75 1.24 1.62 2.02.18.16.35.33.54.48.57.48 1.01.43 1.34.05.33-.38 1.43-1.65 1.81-2.22.38-.57.77-.47 1.3-.28.53.19 3.39 1.6 3.98 1.9.59.29.98.44 1.13.7.15.25.15 1.47-.11 2.21z"/></svg></div>
+                <span id="text-waBtnLabel">JOIN WHATSAPP</span>
+            </a>
+        </div>
+
+        <div class="footer-copyright">COPYRIGHT BY BALA X MOD</div>
+    </div>
+
+    <div class="auth-container" id="adminLoginCard">
+        <h3 style="margin:0 0 15px 0; font-size: 20px;">ADMIN ACCESS</h3>
+        <input type="password" id="adminPasswordInput" placeholder="Enter Admin Password">
+        <button class="btn" onclick="checkAdminPassword()" style="padding: 14px; margin-bottom: 10px;">LOGIN</button>
+        <button class="btn" onclick="closeAdminLoginCard()" style="background: rgba(255,255,255,0.05); padding: 12px; color:#94a3b8;">CANCEL</button>
+    </div>
+
+    <div class="admin-container" id="adminDashboardPanel">
+        <div class="admin-tab-bar">
+            <button class="admin-tab active" id="btn-tab-stats" onclick="switchAdminTab('stats')">Overview</button>
+            <button class="admin-tab" id="btn-tab-settings" onclick="switchAdminTab('settings')">Settings</button>
+            <button class="admin-tab" onclick="logoutAdmin()" style="color: #ef4444; grid-column: span 2;">Logout</button>
+        </div>
+
+        <div id="tab-stats" class="panel-content active">
+            <div class="stats-grid">
+                <div class="stat-card"><div class="label">Total Keys Generated</div><div class="value" id="stat-totalGen">0</div></div>
+                <div class="stat-card"><div class="label">Allowed Pool Size</div><div class="value">6 Keys</div></div>
+            </div>
+        </div>
+
+        <div id="tab-settings" class="panel-content">
+            <div class="setting-section">
+                <h4>1. Edit Admin Security</h4>
+                <label>Change Admin Password</label>
+                <input type="password" id="inp-adminPass" placeholder="Enter New Password">
+                <button class="btn" onclick="changeAdminPasswordLogic()" style="font-size:11px; padding:10px; background:#7928ca;">CHANGE PASSWORD</button>
+            </div>
+
+            <div class="setting-section">
+                <h4>2. Edit Site Texts</h4>
+                <label>Main Site Title</label>
+                <input type="text" id="inp-siteTitle" value="BALA X MOD">
+                <label>Tagline Description</label>
+                <input type="text" id="inp-siteTagline" value="I am hosting anything, anytime — get your API key instantly.">
+                <label>Box Header Title</label>
+                <input type="text" id="inp-boxHeader" value="GENERATE YOUR KEY">
+            </div>
+
+            <div class="setting-section">
+                <h4>3. Edit Social Links</h4>
+                <label>Telegram Channel Link</label>
+                <input type="text" id="inp-tgLink" value="https://t.me/yourchannel">
+                <label>WhatsApp Link</label>
+                <input type="text" id="inp-waLink" value="https://wa.me/yournumber">
+            </div>
+
+            <div class="setting-section">
+                <h4>4. Theme Colors</h4>
+                <div class="color-row"><label>Background Color</label><input type="color" id="col-bg" value="#0b061f"></div>
+                <div class="color-row"><label>Card Base Color</label><input type="color" id="col-card" value="#140b2b"></div>
+                <div class="color-row"><label>Card Glowing Light</label><input type="color" id="col-glow" value="#bd00ff"></div>
+                <div class="color-row"><label>Generate Button Color</label><input type="color" id="col-btnBg" value="#ff0080"></div>
+                <div class="color-row"><label>Key Text Color</label><input type="color" id="col-keyText" value="#ff007f"></div>
+            </div>
+
+            <button class="btn" onclick="saveAdminSettingsChanges()" style="background: #10b981; padding: 16px; margin-bottom: 20px;">SAVE CHANGES ✅</button>
+        </div>
+    </div>
+
+    <script>
+        const ALLOWED_KEYS = ["NOOB-0987", "NOOB-1234", "NOOB-7321", "NOOB-5200", "NOOB-5900", "NOOB-2427"];
+        let activeAdminPassword = "admin123"; 
+        let generationCount = 0; 
+
+        function processKeyGeneration() {
+            const keyDefaultTxt = document.getElementById("keyDefaultTxt");
+            const aeLoader = document.getElementById("aeLoader");
+            const loadPercent = document.getElementById("loadPercent");
+            const generateBtn = document.getElementById("generateBtn");
+            const keyOutput = document.getElementById("keyOutput");
+
+            generateBtn.disabled = true;
+            generateBtn.innerText = "GENERATING...";
+            
+            keyDefaultTxt.style.display = "none";
+            aeLoader.style.display = "flex";
+
+            let percent = 0;
+            let progressInterval = setInterval(() => {
+                percent += 5;
+                loadPercent.innerText = percent + "%";
+                if(percent >= 100) {
+                    clearInterval(progressInterval);
+                    
+                    aeLoader.style.display = "none";
+                    keyDefaultTxt.style.display = "block";
+
+                    const copyBtn = document.getElementById("copyBtnElement");
+                    const timerStrip = document.getElementById("timerStatusStrip");
+
+                    const randomIndex = Math.floor(Math.random() * ALLOWED_KEYS.length);
+                    const selectedKey = ALLOWED_KEYS[randomIndex];
+
+                    keyDefaultTxt.innerText = selectedKey;
+                    keyOutput.classList.add("activated");
+
+                    copyBtn.style.display = "block";
+                    timerStrip.style.display = "flex";
+                    generateBtn.innerText = "KEY ACTIVATED";
+
+                    generationCount++;
+                    document.getElementById("stat-totalGen").innerText = generationCount;
+
+                    startFakeCountdown();
+                }
+            }, 100); 
+        }
+
+        function copyGeneratedKey() {
+            const keyText = document.getElementById("keyDefaultTxt").innerText;
+            navigator.clipboard.writeText(keyText).then(() => {
+                const copyBtn = document.getElementById("copyBtnElement");
+                copyBtn.innerText = "COPIED!";
+                setTimeout(() => { copyBtn.innerText = "COPY"; }, 2000);
+            });
+        }
+
+        function startFakeCountdown() {
+            let hours = 23, minutes = 59, seconds = 59;
+            const timerText = document.getElementById("countdownTimerText");
+            setInterval(() => {
+                seconds--;
+                if(seconds < 0) { seconds = 59; minutes--; }
+                if(minutes < 0) { minutes = 59; hours--; }
+                let h = hours < 10 ? "0" + hours : hours;
+                let m = minutes < 10 ? "0" + minutes : minutes;
+                let s = seconds < 10 ? "0" + seconds : seconds;
+                timerText.innerText = `YOUR KEY EXPIRES⌛ (${h}:${m}:${s})`;
+            }, 1000);
+        }
+
+        function toggleAdminFlow() {
+            document.getElementById("mainDashboardView").style.display = "none";
+            document.getElementById("adminDashboardPanel").style.display = "none";
+            document.getElementById("adminLoginCard").style.display = "block";
+        }
+
+        function closeAdminLoginCard() {
+            document.getElementById("adminLoginCard").style.display = "none";
+            document.getElementById("mainDashboardView").style.display = "flex";
+        }
+
+        function checkAdminPassword() {
+            const enteredPass = document.getElementById("adminPasswordInput").value;
+            if (enteredPass === activeAdminPassword) {
+                document.getElementById("adminLoginCard").style.display = "none";
+                document.getElementById("adminDashboardPanel").style.display = "block";
+                document.getElementById("adminPasswordInput").value = ""; 
+            } else {
+                alert("Incorrect password! Please try again.");
+            }
+        }
+
+        function switchAdminTab(tabName) {
+            document.querySelectorAll('.panel-content').forEach(panel => panel.classList.remove('active'));
+            document.querySelectorAll('.admin-tab').forEach(tab => tab.classList.remove('active'));
+            
+            document.getElementById('tab-' + tabName).classList.add('active');
+            document.getElementById('btn-tab-' + tabName).classList.add('active');
+        }
+
+        function logoutAdmin() {
+            document.getElementById("adminDashboardPanel").style.display = "none";
+            document.getElementById("mainDashboardView").style.display = "flex";
+        }
+
+        function changeAdminPasswordLogic() {
+            const newPass = document.getElementById("inp-adminPass").value;
+            if(newPass.trim() !== "") {
+                activeAdminPassword = newPass;
+                alert("Admin password updated successfully! 🔒");
+                document.getElementById("inp-adminPass").value = "";
+            } else {
+                alert("Please enter a valid password!");
+            }
+        }
+
+        function saveAdminSettingsChanges() {
+            document.getElementById("text-siteTitle").innerText = document.getElementById("inp-siteTitle").value;
+            document.getElementById("text-siteTagline").innerText = document.getElementById("inp-siteTagline").value;
+            document.getElementById("text-boxHeader").innerText = document.getElementById("inp-boxHeader").value;
+
+            document.getElementById("tgLink").href = document.getElementById("inp-tgLink").value;
+            document.getElementById("waLink").href = document.getElementById("inp-waLink").value;
+
+            const root = document.documentElement;
+            root.style.setProperty('--bg-color', document.getElementById("col-bg").value);
+            root.style.setProperty('--card-bg', document.getElementById("col-card").value + "bf"); 
+            root.style.setProperty('--border-glow', document.getElementById("col-glow").value);
+            root.style.setProperty('--gen-btn-bg', document.getElementById("col-btnBg").value);
+            root.style.setProperty('--key-text-color', document.getElementById("col-keyText").value);
+
+            alert("Settings updated successfully! ✅");
+            logoutAdmin(); 
+        }
+    </script>
+</body>
+</html>
